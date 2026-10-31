@@ -1,0 +1,268 @@
+/* ===== MUSIC CARD ===== */
+
+.music-card {
+  --cover-color: hsl(var(--hue, 340) 75% 55%);
+  position: relative;
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition:
+    transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+    background 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.music-card:hover {
+  transform: translateY(-6px);
+  background: var(--surface-2);
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.5),
+    0 0 0 1px hsl(var(--hue, 340) 75% 55% / 0.25);
+}
+
+/* ===== COVER ===== */
+
+.cover {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  margin-bottom: 14px;
+}
+
+.cover img,
+.cover-art {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
+  transform-origin: left center;
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.music-card:hover .cover img,
+.music-card:hover .cover-art {
+  transform: scale(0.88);
+}
+
+/* Generated artwork for albums without a cover image */
+.cover-art {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 14px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 80% 20%, hsl(calc(var(--hue, 340) + 40) 90% 65% / 0.9), transparent 55%),
+    radial-gradient(circle at 10% 90%, hsl(calc(var(--hue, 340) - 30) 80% 30%), transparent 60%),
+    linear-gradient(160deg, hsl(var(--hue, 340) 70% 45%), hsl(calc(var(--hue, 340) + 60) 60% 15%));
+}
+
+/* Grain texture for a printed-sleeve feel */
+.cover-art::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.cover-artist {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.75);
+  margin-bottom: 4px;
+}
+
+.cover-title {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 1.6vw, 1.35rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #fff;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ===== VINYL (slides out of the sleeve on hover) ===== */
+
+.vinyl {
+  position: absolute;
+  inset: 4% 4% 4% 4%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, var(--cover-color) 0 14%, #111 14.5% 16%, transparent 16.5%),
+    repeating-radial-gradient(circle, #111 0 2px, #1b1b1b 2px 3px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.vinyl::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(from 30deg, transparent 0 20%, rgba(255, 255, 255, 0.12) 25%, transparent 30% 70%, rgba(255, 255, 255, 0.08) 75%, transparent 80%);
+}
+
+.music-card:hover .vinyl {
+  transform: translateX(9%) rotate(120deg);
+}
+
+/* ===== GENRE BADGE ===== */
+
+.genre-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  padding: 4px 10px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #fff;
+  background: rgba(10, 10, 15, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
+}
+
+/* ===== PLAY BUTTON ===== */
+
+.play-btn {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  z-index: 2;
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  padding-left: 3px;
+  border: none;
+  border-radius: 50%;
+  background: var(--accent-gradient);
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(255, 61, 110, 0.45);
+  opacity: 0;
+  transform: translateY(10px) scale(0.9);
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.music-card:hover .play-btn,
+.play-btn:focus-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.play-btn:hover {
+  transform: scale(1.08);
+}
+
+/* ===== CARD CONTENT ===== */
+
+.card-content {
+  padding: 0 4px 2px;
+}
+
+.card-content h3 {
+  font-size: 0.98rem;
+  font-weight: 600;
+  margin: 0 0 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card-content p {
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+
+.year {
+  font-size: 0.75rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-dim);
+  padding: 3px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.fav-btn {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.fav-btn:hover {
+  color: var(--accent);
+  background: rgba(255, 61, 110, 0.12);
+  transform: scale(1.1);
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 700px) {
+  .music-card {
+    padding: 10px;
+  }
+
+  /* No hover on touch screens, so keep the play button visible */
+  .play-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 0.85rem;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .music-card,
+  .vinyl,
+  .cover img,
+  .cover-art,
+  .play-btn {
+    transition: none;
+  }
+}

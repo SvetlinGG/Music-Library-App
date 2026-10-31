@@ -1,3 +1,5 @@
+import { Route, Routes } from 'react-router'
+import AlbumCatalog from "./components/AlbumCatalog"
 
 
 
@@ -6,7 +8,9 @@ function App() {
 
   return (
     <>
-      <h1>Music Sellector</h1>
+      <Routes>
+        <Route path="/" element={<AlbumCatalog />} />
+      </Routes>
     </>
   )
 }
