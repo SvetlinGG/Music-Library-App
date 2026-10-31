@@ -1,0 +1,173 @@
+
+/* ===== MUSIC CATALOG ===== */
+
+.catalog {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  color: #f5f5f5;
+}
+
+.catalog h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+/* ===== SEARCH & FILTERS ===== */
+
+.filters {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.filters input,
+.filters select {
+  padding: 12px 16px;
+  background: #252525;
+  color: #fff;
+  border: 1px solid #444;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.filters input {
+  flex: 1;
+  min-width: 0;
+}
+
+.filters input:focus,
+.filters select:focus {
+  border-color: #1db954;
+}
+
+.filters input::placeholder {
+  color: #999;
+}
+
+/* ===== MUSIC GRID ===== */
+
+.music-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 20px;
+}
+
+/* ===== MUSIC CARD ===== */
+
+.music-card {
+  min-width: 0;
+  background: #202020;
+  border: 1px solid #333;
+  border-radius: 12px;
+  overflow: hidden;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.music-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+}
+
+.music-card img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+}
+
+/* ===== CARD CONTENT ===== */
+
+.card-content {
+  padding: 16px;
+}
+
+.card-content h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card-content p {
+  font-size: 0.9rem;
+  color: #aaa;
+  margin: 0 0 8px;
+}
+
+.card-content span {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+/* ===== CARD BUTTONS ===== */
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.card-actions button {
+  flex: 1;
+  min-width: 0;
+  padding: 9px 6px;
+  border: none;
+  border-radius: 6px;
+  background: #333;
+  color: white;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.card-actions button:hover {
+  background: #1db954;
+  color: #111;
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 1100px) {
+  .music-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .music-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .catalog {
+    padding: 20px 12px;
+  }
+
+  .filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .card-content {
+    padding: 12px;
+  }
+
+  .card-actions {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 380px) {
+  .music-grid {
+    grid-template-columns: 1fr;
+  }
+}
