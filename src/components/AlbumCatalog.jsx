@@ -6,23 +6,13 @@ import { useState } from "react";
 
 export default function AlbumCatalog() {
 
-  const [data, setData] = useState();
+  const [query, setQuery] = useState("");
+const [sortBy, setSortBy] = useState("year");
 
-  const searchData = (e) => {
-    setData(state => ({
-      ...state,
-        albums: state.albums.filter(album => 
-        album.title.toLowerCase().includes(e.target.value) ||
-        album.artist.toLowerCase().includes(e.target.value)
-      )
-    }))
-  }
-
-  //console.log(albums);
-
-  
-
-
+const q = query.trim().toLowerCase();
+const visibleAlbums = albums
+  .filter(a => a.title.toLowerCase().includes(q) || a.artist.toLowerCase().includes(q))
+  .toSorted((a, b) => sortBy === "year" ? a.year - b.year : a[sortBy].localeCompare(b[sortBy]));
 
 
   return (
@@ -31,18 +21,19 @@ export default function AlbumCatalog() {
         <span className="eyebrow">Your Library</span>
         <h1>Music Catalog</h1>
         <p className="catalog-subtitle">
-          {albums.length} albums · Classic records that shaped rock history
+          {visibleAlbums.length} albums · Classic records that shaped rock history
         </p>
       </header>
 
       <div className="filters">
         <input
           type="text"
-          onSubmit={searchData}
+          value={query}
+          onChange={e => setQuery(e.target.value)}
           placeholder="Search artist or album..."
         />
 
-        <select>
+        <select value={sortBy} onChange={e => setSortBy(e.target.value)}>
           <option value="years">Years</option>
           <option value="title">Title</option>
           <option value="artist">Artist</option>
@@ -50,7 +41,7 @@ export default function AlbumCatalog() {
       </div>
 
       <div className="music-grid">
-        {albums.map((album) => (
+        {visibleAlbums.map((album) => (
           <MusicCard key={album.id} {...album} />
         ))}
       </div>
