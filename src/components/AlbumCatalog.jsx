@@ -1,17 +1,15 @@
 import MusicCard from "./MusicCard";
-//import { albums } from "../data/albums";
+import { albums } from "../data/albums";
 import { useState } from "react";
 
 
 
 export default function AlbumCatalog() {
 
-  const [albums, setAlbums] = useState({
-    albums: albums
-});
+  const [data, setData] = useState();
 
-  const searchData = async (e) => {
-    setAlbums(state => ({
+  const searchData = (e) => {
+    setData(state => ({
       ...state,
         albums: state.albums.filter(album => 
         album.title.toLowerCase().includes(e.target.value) ||
@@ -19,6 +17,8 @@ export default function AlbumCatalog() {
       )
     }))
   }
+
+  //console.log(albums);
 
   
 
