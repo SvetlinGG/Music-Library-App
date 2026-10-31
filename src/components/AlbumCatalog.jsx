@@ -1,7 +1,30 @@
 import MusicCard from "./MusicCard";
-import { albums } from "../data/albums";
+//import { albums } from "../data/albums";
+import { useState } from "react";
+
+
 
 export default function AlbumCatalog() {
+
+  const [albums, setAlbums] = useState({
+    albums: albums
+});
+
+  const searchData = async (e) => {
+    setAlbums(state => ({
+      ...state,
+        albums: state.albums.filter(album => 
+        album.title.toLowerCase().includes(e.target.value) ||
+        album.artist.toLowerCase().includes(e.target.value)
+      )
+    }))
+  }
+
+  
+
+
+
+
   return (
     <section className="catalog">
       <header className="catalog-header">
@@ -15,11 +38,14 @@ export default function AlbumCatalog() {
       <div className="filters">
         <input
           type="text"
+          onSubmit={searchData}
           placeholder="Search artist or album..."
         />
 
         <select>
-          <option value="">All years</option>
+          <option value="years">Years</option>
+          <option value="title">Title</option>
+          <option value="artist">Artist</option>
         </select>
       </div>
 
