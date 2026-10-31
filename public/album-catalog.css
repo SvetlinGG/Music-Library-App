@@ -1,52 +1,36 @@
-.catalog {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 32px 20px;
-}
-
-.filters {
-  display: flex;
-  gap: 16px;
-  margin: 24px 0;
-}
-
-.filters input,
-.filters select {
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-}
-
-.filters input {
-  flex: 1;
-}
-
 .music-grid {
   display: grid;
-  grid-template-columns:
-    repeat(auto-fit, minmax(220px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 20px;
+  width: 100%;
 }
 
 .music-card {
-  background: #20232a;
-  color: white;
+  width: 100%;
+  min-width: 0;
   border-radius: 12px;
   overflow: hidden;
+  background: #20232a;
+  color: white;
 }
 
 .music-card img {
   width: 100%;
-  aspect-ratio: 1;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
+  display: block;
 }
 
-.card-content {
-  padding: 16px;
+/* Tablet */
+@media (max-width: 1024px) {
+  .music-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
-.card-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 16px;
+/* Mobile */
+@media (max-width: 600px) {
+  .music-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
