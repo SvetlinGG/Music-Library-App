@@ -11,7 +11,10 @@ const [sortBy, setSortBy] = useState("year");
 
 const q = query.trim().toLowerCase();
 const visibleAlbums = albums
-  .filter(a => a.title.toLowerCase().includes(q) || a.artist.toLowerCase().includes(q))
+  .filter(a => 
+    a.title.toLowerCase().includes(q) || 
+    a.artist.toLowerCase().includes(q) ||
+    String(a.year).includes(q))
   .toSorted((a, b) => sortBy === "year" ? a.year - b.year : a[sortBy].localeCompare(b[sortBy]));
 
 
@@ -30,11 +33,11 @@ const visibleAlbums = albums
           type="text"
           value={query}
           onChange={e => setQuery(e.target.value)}
-          placeholder="Search artist or album..."
+          placeholder="Search artist, album or year..."
         />
 
         <select value={sortBy} onChange={e => setSortBy(e.target.value)}>
-          <option value="years">Years</option>
+          <option value="year">Year</option>
           <option value="title">Title</option>
           <option value="artist">Artist</option>
         </select>
