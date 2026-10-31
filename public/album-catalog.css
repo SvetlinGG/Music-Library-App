@@ -1,0 +1,52 @@
+.catalog {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 20px;
+}
+
+.filters {
+  display: flex;
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.filters input,
+.filters select {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.filters input {
+  flex: 1;
+}
+
+.music-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+}
+
+.music-card {
+  background: #20232a;
+  color: white;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.music-card img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 16px;
+}
+
+.card-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
