@@ -6,7 +6,7 @@ export default function MusicCard({
   genre = "",
   cover = "",
 }) {
-  // Albums have no artwork yet, so each one gets its own generated gradient cover
+  
   const hue = (id * 47) % 360;
 
   return (

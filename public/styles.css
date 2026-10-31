@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap');
 @import '/public/album-catalog.css';
-@import '/public/music-catalog.css';
+@import '/public/music-card.css';
 
 /* ===== DESIGN TOKENS ===== */
 
