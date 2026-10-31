@@ -1,3 +1,4 @@
+import MusicCard from "./MusicCard";
 export default function AlbumCatalog() {
     return (
         <section className="catalog">
@@ -7,32 +8,15 @@ export default function AlbumCatalog() {
         <input
           type="text"
           placeholder="Search artist or album..."
-          value={search}
-          onChange={e => setSearch(e.target.value)}
         />
 
-        <select
-          value={year}
-          onChange={e => setYear(e.target.value)}
-        >
+        <select>
           <option value="">All years</option>
 
-          {years.map(year => (
-            <option key={year} value={year}>
-              {year}
-            </option>
-          ))}
         </select>
       </div>
 
-      <div className="music-grid">
-        {filteredAlbums.map(album => (
-          <MusicCard
-            key={album.id}
-            album={album}
-            onFavorite={handleFavorite}
-          />
-        ))}
+      <div className="music-grid"><MusicCard/>
       </div>
     </section>
     );
