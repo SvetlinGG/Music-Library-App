@@ -7,7 +7,7 @@ import { useState } from "react";
 export default function AlbumCatalog() {
 
   const [query, setQuery] = useState("");
-const [sortBy, setSortBy] = useState("year");
+  const [sortBy, setSortBy] = useState("year");
 
 const q = query.trim().toLowerCase();
 const visibleAlbums = albums
