@@ -13,11 +13,11 @@
   max-width: 440px;
   padding: 40px 36px 32px;
   border-radius: 24px;
-  background: rgba(20, 20, 28, 0.75);
+  background: var(--surface-glass);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border);
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 30px 80px var(--shadow-strong);
 }
 
 .auth-card::before {

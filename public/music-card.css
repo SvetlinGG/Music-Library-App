@@ -19,7 +19,7 @@
   transform: translateY(-6px);
   background: var(--surface-2);
   box-shadow:
-    0 20px 40px rgba(0, 0, 0, 0.5),
+    0 20px 40px var(--shadow-strong),
     0 0 0 1px hsl(var(--hue, 340) 75% 55% / 0.25);
 }
 
@@ -40,7 +40,7 @@
   display: block;
   object-fit: cover;
   border-radius: 10px;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 10px 24px var(--shadow);
   transform-origin: left center;
   transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 }

@@ -1,4 +1,5 @@
 import { Link, NavLink } from "react-router";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Header() {
   return (
@@ -19,6 +20,7 @@ export default function Header() {
         </nav>
 
         <div className="auth-links">
+          <ThemeToggle />
           <NavLink to="/login" className="nav-link">Login</NavLink>
           <NavLink to="/register" className="btn-register">Register</NavLink>
         </div>
