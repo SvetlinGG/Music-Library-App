@@ -9,7 +9,7 @@ export default function Header() {
             <span className="logo-disc" />
           </span>
           <span className="logo-text">
-            Sound<span>Vault</span>
+            Sound<span>Vibe</span>
           </span>
         </Link>
 

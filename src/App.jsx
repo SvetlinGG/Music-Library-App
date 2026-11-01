@@ -3,6 +3,7 @@ import AlbumCatalog from "./components/AlbumCatalog"
 import Header from "./components/Header"
 import Login from "./components/Login"
 import Register from "./components/Register"
+import MyCollection from "./components/MyCollection"
 
 
 
@@ -16,6 +17,7 @@ function App() {
         <Route path="/" element={<AlbumCatalog />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/my-collection" element={<MyCollection />} />
       </Routes>
     </>
   )
