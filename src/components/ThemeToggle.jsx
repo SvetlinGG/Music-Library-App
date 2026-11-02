@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 export default function ThemeToggle() {
-  // index.html sets the saved theme before React loads, so read it from there
+  
   const [theme, setTheme] = useState(
     () => document.documentElement.dataset.theme || "dark"
   );

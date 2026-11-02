@@ -1,11 +1,26 @@
 import { Link } from "react-router";
 import MusicCard from "./MusicCard";
-import { albums } from "../data/albums";
+import { useEffect, useState } from "react";
+//import { albums } from "../data/albums";
 
-// Static placeholder data until collection logic is implemented
-const collectionAlbums = albums.slice(0, 5);
+
+//const collectionAlbums = albums.slice(0, 3);
+
+const collectionAlbums = []
 
 export default function MyCollection() {
+
+  const [selectAlbum, setSelectAlbum] = useState(collectionAlbums)
+
+  useEffect((album) => {
+    if (selectAlbum.find(item => item.id === album.id)) {
+      setSelectAlbum(selectAlbum.filter(item => item.id !== album.id))
+      collectionAlbums.push(selectAlbum)
+    } else {
+      setSelectAlbum([...selectAlbum, album])
+    }
+  },[selectAlbum])
+
   return (
     <section className="catalog collection">
       <header className="collection-hero">
