@@ -37,9 +37,9 @@ const visibleAlbums = albums
         />
 
         <select value={sortBy} onChange={e => setSortBy(e.target.value)}>
-          <option value="year">Year</option>
-          <option value="title">Title</option>
           <option value="artist">Artist</option>
+          <option value="title">Title</option>
+          <option value="song">Song</option>
         </select>
       </div>
 

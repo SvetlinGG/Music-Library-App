@@ -7,7 +7,7 @@
   padding: 56px 32px 80px;
 }
 
-/* ===== HEADER ===== */
+
 
 .catalog-header {
   margin-bottom: 36px;
@@ -105,7 +105,7 @@
   color: var(--text-dim);
 }
 
-/* ===== MUSIC GRID ===== */
+
 
 .music-grid {
   display: grid;
@@ -113,7 +113,7 @@
   gap: 28px 22px;
 }
 
-/* ===== RESPONSIVE ===== */
+
 
 @media (max-width: 1100px) {
   .music-grid {

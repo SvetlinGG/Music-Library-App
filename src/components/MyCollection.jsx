@@ -1,25 +1,25 @@
 import { Link } from "react-router";
 import MusicCard from "./MusicCard";
 import { useEffect, useState } from "react";
-//import { albums } from "../data/albums";
+import { albums } from "../data/albums";
 
 
-//const collectionAlbums = albums.slice(0, 3);
+
 
 const collectionAlbums = []
 
 export default function MyCollection() {
 
-  const [selectAlbum, setSelectAlbum] = useState(collectionAlbums)
+  //const [selectAlbum, setSelectAlbum] = useState(collectionAlbums)
 
-  useEffect((album) => {
-    if (selectAlbum.find(item => item.id === album.id)) {
-      setSelectAlbum(selectAlbum.filter(item => item.id !== album.id))
-      collectionAlbums.push(selectAlbum)
-    } else {
-      setSelectAlbum([...selectAlbum, album])
-    }
-  },[selectAlbum])
+  // useEffect((album) => {
+  //   if (selectAlbum.find(item => item.id === album.id)) {
+  //     setSelectAlbum(selectAlbum.filter(item => item.id !== album.id))
+  //     collectionAlbums.push(selectAlbum)
+  //   } else {
+  //     setSelectAlbum([...selectAlbum, album])
+  //   }
+  // },[selectAlbum])
 
   return (
     <section className="catalog collection">
@@ -34,21 +34,21 @@ export default function MyCollection() {
 
         <ul className="collection-stats">
           <li className="stat">
-            <span className="stat-value">5</span>
+            <span className="stat-value">4</span>
             <span className="stat-label">Albums</span>
           </li>
           <li className="stat">
-            <span className="stat-value">3</span>
+            <span className="stat-value">Artist</span>
             <span className="stat-label">Artists</span>
           </li>
           <li className="stat">
-            <span className="stat-value">2</span>
+            <span className="stat-value">Genre</span>
             <span className="stat-label">Genres</span>
           </li>
         </ul>
       </header>
 
-      <div className="collection-toolbar">
+      {/* <div className="collection-toolbar">
         <div className="collection-tabs" role="tablist">
           <button className="collection-tab active" role="tab" aria-selected="true">All</button>
           <button className="collection-tab" role="tab" aria-selected="false">Favorites</button>
@@ -63,7 +63,7 @@ export default function MyCollection() {
             <option value="artist">Artist</option>
           </select>
         </div>
-      </div>
+      </div> */}
 
       <div className="music-grid">
         {collectionAlbums.map((album) => (

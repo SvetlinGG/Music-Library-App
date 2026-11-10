@@ -1,4 +1,4 @@
-/* ===== MUSIC CARD ===== */
+
 
 .music-card {
   --cover-color: hsl(var(--hue, 340) 75% 55%);
@@ -23,7 +23,7 @@
     0 0 0 1px hsl(var(--hue, 340) 75% 55% / 0.25);
 }
 
-/* ===== COVER ===== */
+
 
 .cover {
   position: relative;
@@ -50,7 +50,7 @@
   transform: scale(0.88);
 }
 
-/* Generated artwork for albums without a cover image */
+
 .cover-art {
   display: flex;
   flex-direction: column;
@@ -63,7 +63,7 @@
     linear-gradient(160deg, hsl(var(--hue, 340) 70% 45%), hsl(calc(var(--hue, 340) + 60) 60% 15%));
 }
 
-/* Grain texture for a printed-sleeve feel */
+
 .cover-art::after {
   content: '';
   position: absolute;
@@ -97,7 +97,7 @@
   overflow: hidden;
 }
 
-/* ===== VINYL (slides out of the sleeve on hover) ===== */
+
 
 .vinyl {
   position: absolute;
@@ -122,7 +122,7 @@
   transform: translateX(9%) rotate(120deg);
 }
 
-/* ===== GENRE BADGE ===== */
+
 
 .genre-badge {
   position: absolute;
@@ -140,7 +140,7 @@
   backdrop-filter: blur(8px);
 }
 
-/* ===== PLAY BUTTON ===== */
+
 
 .play-btn {
   position: absolute;
@@ -176,7 +176,7 @@
   transform: scale(1.08);
 }
 
-/* ===== CARD CONTENT ===== */
+
 
 .card-content {
   padding: 0 4px 2px;
@@ -240,14 +240,14 @@
   transform: scale(1.1);
 }
 
-/* ===== RESPONSIVE ===== */
+
 
 @media (max-width: 700px) {
   .music-card {
     padding: 10px;
   }
 
-  /* No hover on touch screens, so keep the play button visible */
+  
   .play-btn {
     width: 38px;
     height: 38px;

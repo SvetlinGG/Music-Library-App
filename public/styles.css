@@ -5,7 +5,7 @@
 @import '/public/auth.css';
 @import '/public/collection.css';
 
-/* ===== DESIGN TOKENS ===== */
+
 
 :root {
   --bg: #0a0a0f;
@@ -34,7 +34,7 @@
   color-scheme: dark;
 }
 
-/* ===== LIGHT THEME ===== */
+/*  LIGHT THEME  */
 
 :root[data-theme="light"] {
   --bg: #f7f6fa;
@@ -59,7 +59,7 @@
   color-scheme: light;
 }
 
-/* ===== BASE ===== */
+/*  BASE */
 
 *,
 *::before,

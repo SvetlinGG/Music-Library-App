@@ -1,4 +1,4 @@
-/*  AUTH PAGE  */
+
 
 .auth-page {
   min-height: calc(100vh - 69px);
@@ -31,7 +31,7 @@
   background: var(--accent-gradient);
 }
 
-/*  HEADER  */
+
 
 .auth-header {
   margin-bottom: 28px;
@@ -50,7 +50,7 @@
   font-size: 0.95rem;
 }
 
-/*  FORM  */
+
 
 .auth-form {
   display: flex;
@@ -138,7 +138,7 @@
   box-shadow: 0 14px 34px rgba(255, 61, 110, 0.45);
 }
 
-/*  FOOTER  */
+
 
 .auth-footer {
   margin: 24px 0 0;
