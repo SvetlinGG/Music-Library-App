@@ -1,25 +1,9 @@
 import { Link } from "react-router";
 import MusicCard from "./MusicCard";
-import { useEffect, useState } from "react";
-import { albums } from "../data/albums";
 
-
-
-
-const collectionAlbums = []
 
 export default function MyCollection() {
 
-  //const [selectAlbum, setSelectAlbum] = useState(collectionAlbums)
-
-  // useEffect((album) => {
-  //   if (selectAlbum.find(item => item.id === album.id)) {
-  //     setSelectAlbum(selectAlbum.filter(item => item.id !== album.id))
-  //     collectionAlbums.push(selectAlbum)
-  //   } else {
-  //     setSelectAlbum([...selectAlbum, album])
-  //   }
-  // },[selectAlbum])
 
   return (
     <section className="catalog collection">
@@ -48,27 +32,11 @@ export default function MyCollection() {
         </ul>
       </header>
 
-      {/* <div className="collection-toolbar">
-        <div className="collection-tabs" role="tablist">
-          <button className="collection-tab active" role="tab" aria-selected="true">All</button>
-          <button className="collection-tab" role="tab" aria-selected="false">Favorites</button>
-          <button className="collection-tab" role="tab" aria-selected="false">Wishlist</button>
-        </div>
-
-        <div className="filters collection-filters">
-          <input type="text" placeholder="Search your collection..." />
-          <select defaultValue="year">
-            <option value="year">Year</option>
-            <option value="title">Title</option>
-            <option value="artist">Artist</option>
-          </select>
-        </div>
-      </div> */}
-
       <div className="music-grid">
-        {collectionAlbums.map((album) => (
-          <MusicCard key={album.id} {...album} />
-        ))}
+        
+          <MusicCard />
+          
+        
       </div>
 
       <div className="collection-empty">

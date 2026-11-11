@@ -1,0 +1,222 @@
+.details-back {
+  display: inline-block;
+  margin-bottom: 32px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.details-back:hover {
+  color: var(--accent);
+}
+
+.details-layout {
+  display: grid;
+  grid-template-columns: minmax(240px, 420px) 1fr;
+  gap: 56px;
+  align-items: center;
+  margin-bottom: 56px;
+}
+
+/* Cover + vinyl */
+
+.details-cover {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  --hue: 340;
+}
+
+.details-vinyl {
+  position: absolute;
+  inset: 4%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, hsl(var(--hue) 75% 55%) 0 14%, #111 14.5% 16%, transparent 16.5%),
+    repeating-radial-gradient(circle, #111 0 2px, #1b1b1b 2px 3px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  transform: translateX(22%);
+}
+
+.details-cover-art {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 24px;
+  border-radius: var(--radius);
+  box-shadow: 0 20px 50px var(--shadow);
+  background:
+    radial-gradient(circle at 80% 20%, hsl(calc(var(--hue) + 40) 90% 65% / 0.9), transparent 55%),
+    radial-gradient(circle at 10% 90%, hsl(calc(var(--hue) - 30) 80% 30%), transparent 60%),
+    linear-gradient(160deg, hsl(var(--hue) 70% 45%), hsl(calc(var(--hue) + 60) 60% 15%));
+}
+
+/* Info */
+
+.details-info h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin: 10px 0 8px;
+}
+
+.details-artist {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin: 0 0 28px;
+}
+
+.details-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0 0 28px;
+  padding: 0;
+  list-style: none;
+}
+
+.details-meta li {
+  min-width: 96px;
+  padding: 12px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.meta-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.meta-value {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.details-description {
+  max-width: 560px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin: 0 0 32px;
+}
+
+.details-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.details-play,
+.details-fav {
+  padding: 12px 24px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.details-play {
+  border: none;
+  color: #fff;
+  background: var(--accent-gradient);
+  box-shadow: 0 10px 24px rgba(255, 61, 110, 0.35);
+}
+
+.details-play:hover {
+  transform: translateY(-2px);
+}
+
+.details-fav {
+  color: var(--text);
+  background: transparent;
+  border: 1px solid var(--border-strong);
+}
+
+.details-fav:hover {
+  border-color: var(--accent);
+  background: rgba(255, 61, 110, 0.1);
+}
+
+/* Tracklist */
+
+.details-tracks h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  margin: 0 0 16px;
+}
+
+.details-tracks ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.details-tracks li {
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.2s ease;
+}
+
+.details-tracks li:last-child {
+  border-bottom: none;
+}
+
+.details-tracks li:hover {
+  background: var(--hover);
+}
+
+.track-no,
+.track-time {
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-dim);
+}
+
+.track-title {
+  font-weight: 500;
+}
+
+@media (max-width: 800px) {
+  .details-layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .details-cover {
+    max-width: 320px;
+  }
+
+  .details-vinyl {
+    transform: translateX(12%);
+  }
+}
+
+@media (max-width: 700px) {
+  .catalog.details {
+    padding: 32px 16px 64px;
+  }
+}
