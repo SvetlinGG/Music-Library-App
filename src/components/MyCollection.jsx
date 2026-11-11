@@ -1,12 +1,9 @@
 import { Link } from "react-router";
 import MusicCard from "./MusicCard";
-import { useEffect, useState } from "react";
 
 
 export default function MyCollection() {
 
-
-  
 
   return (
     <section className="catalog collection">

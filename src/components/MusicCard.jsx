@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router";
 
 export default function MusicCard({
@@ -10,6 +11,11 @@ export default function MusicCard({
 }) {
   
   const hue = (id * 47) % 360;
+  const [showDetails, setShowDetails] = useState(true);
+
+  const handleDetailsClick = () => {
+    setShowDetails(false);
+  };
 
   return (
     <article className="music-card" style={{ "--hue": hue }}>
@@ -39,9 +45,9 @@ export default function MusicCard({
         <div className="card-footer">
           <span className="year">{year}</span>
 
-          <Link to={`/albums/${id}`} className="details-btn">
+          {showDetails && <Link to={`/albums/${id}`} className="details-btn" onClick={handleDetailsClick}>
             Details
-          </Link>
+          </Link>}
 
           <button className="fav-btn" aria-label={`Add ${title} to favorites`}>
             ♡

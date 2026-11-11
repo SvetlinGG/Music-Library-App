@@ -1,6 +1,16 @@
+
 import { Link } from "react-router";
 
-export default function AlbumDetails() {
+export default function AlbumDetails({
+  title = "Title",
+  artist = "Artist",
+  year = "Year",
+  genre = "",
+  cover = "",
+}) {
+
+
+
   return (
     <section className="catalog details">
       <Link to="/" className="details-back">
@@ -12,23 +22,23 @@ export default function AlbumDetails() {
           <div className="details-vinyl" aria-hidden="true" />
           <div className="details-cover-art" role="img" aria-label="Album cover">
             <span className="cover-artist">Artist</span>
-            <span className="cover-title">Album Title</span>
+            <span className="cover-title">{cover}</span>
           </div>
         </div>
 
         <div className="details-info">
-          <span className="eyebrow">Album</span>
-          <h1>Album Title</h1>
-          <p className="details-artist">Artist</p>
+          <span className="eyebrow">Title</span>
+          <h1>{title}</h1>
+          <p className="details-artist">{artist}</p>
 
           <ul className="details-meta">
             <li>
               <span className="meta-label">Year</span>
-              <span className="meta-value">1986</span>
+              <span className="meta-value">{year}</span>
             </li>
             <li>
               <span className="meta-label">Genre</span>
-              <span className="meta-value">Metal</span>
+              <span className="meta-value">{genre}</span>
             </li>
             <li>
               <span className="meta-label">Tracks</span>
