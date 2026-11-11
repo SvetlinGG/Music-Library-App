@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 export default function MusicCard({
   id = 0,
   title = "Title",
@@ -36,6 +38,10 @@ export default function MusicCard({
 
         <div className="card-footer">
           <span className="year">{year}</span>
+
+          <Link to={`/albums/${id}`} className="details-btn">
+            Details
+          </Link>
 
           <button className="fav-btn" aria-label={`Add ${title} to favorites`}>
             ♡

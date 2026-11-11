@@ -4,6 +4,7 @@ import Header from "./components/Header"
 import Login from "./components/Login"
 import Register from "./components/Register"
 import MyCollection from "./components/MyCollection"
+import AlbumDetails from "./components/AlbumDetails"
 
 
 
@@ -18,6 +19,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/my-collection" element={<MyCollection />} />
+        <Route path="/albums/:albumId" element={<AlbumDetails />} />
       </Routes>
     </>
   )

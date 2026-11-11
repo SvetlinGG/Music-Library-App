@@ -1,14 +1,10 @@
 import { Link } from "react-router";
 import MusicCard from "./MusicCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const collectionAlbums = []
 
 export default function MyCollection() {
 
-  const [albums, setAlbums] = useState(collectionAlbums);
-
-  
 
   
 
@@ -40,9 +36,10 @@ export default function MyCollection() {
       </header>
 
       <div className="music-grid">
-        {collectionAlbums.map((album) => (
-          <MusicCard key={album.id} {...album} />
-        ))}
+        
+          <MusicCard />
+          
+        
       </div>
 
       <div className="collection-empty">
