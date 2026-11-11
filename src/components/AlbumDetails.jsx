@@ -1,6 +1,6 @@
 
 import { Link } from "react-router";
-
+//import { albums } from "../data/albums";
 export default function AlbumDetails({
   title = "Title",
   artist = "Artist",
@@ -12,6 +12,7 @@ export default function AlbumDetails({
 
 
   return (
+    
     <section className="catalog details">
       <Link to="/" className="details-back">
         ← Back to Catalog
@@ -79,5 +80,6 @@ export default function AlbumDetails({
         </ol>
       </div>
     </section>
+    
   );
 }
