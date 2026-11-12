@@ -165,6 +165,31 @@ export async function searchAlbums(title, limit = 20){
     })
 }
 
+// one album (release group) by MusicBrainz id
+export async function getAlbum(albumId){
+    const rg = await request(`release-group/${albumId}`, { inc: 'artist-credits genres' });
+    const releaseDate = rg['first-release-date'] ?? '';
+    return {
+        id: rg.id,
+        album: rg.title,
+        artist: creditName(rg['artist-credit']),
+        genre: topGenre(rg.genres),
+        type: rg['primary-type'] ?? '',
+        year: releaseDate ? Number(releaseDate.slice(0, 4)) : null,
+        releaseDate,
+        cover: getCoverUrl(rg.id, 500),
+    };
+}
+
+// find one album by title + artist (used for the local catalog albums)
+export async function findAlbum(title, artist){
+    const data = await request('release-group', {
+        query: `releasegroup:(${escapeQuery(title)}) AND artist:(${escapeQuery(artist)}) AND primarytype:album`,
+        limit: 1,
+    });
+    return data['release-groups'][0] ?? null;
+}
+
 // search songs by title
 export async function searchSongs(title, limit = 20){
     const data = await request('recording', {

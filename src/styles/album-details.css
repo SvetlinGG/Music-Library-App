@@ -20,7 +20,7 @@
   margin-bottom: 56px;
 }
 
-/* Cover + vinyl */
+
 
 .details-cover {
   position: relative;
@@ -56,7 +56,13 @@
     linear-gradient(160deg, hsl(var(--hue) 70% 45%), hsl(calc(var(--hue) + 60) 60% 15%));
 }
 
-/* Info */
+.details-cover-img {
+  display: block;
+  padding: 0;
+  object-fit: cover;
+}
+
+
 
 .details-info h1 {
   font-family: var(--font-display);
@@ -153,7 +159,7 @@
   background: rgba(255, 61, 110, 0.1);
 }
 
-/* Tracklist */
+
 
 .details-tracks h2 {
   font-family: var(--font-display);
