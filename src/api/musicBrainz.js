@@ -52,3 +52,13 @@ export function formatDuration(ms){
     return `${minutes}:${seconds}`;
 }
 
+// album picture 
+export function getCoverUrl(albumId, size = 250){
+    return `${COVER_URL}/release-group/${albumId}/front-${size}`;
+
+}
+
+function getGenre(genres = []){
+    if (!genres.length) return '';
+    return [...genres].sort((a, b) => b.count - a.count)[0].name;
+}
