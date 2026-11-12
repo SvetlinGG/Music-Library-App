@@ -165,3 +165,30 @@ export async function searchAlbums(title, limit = 20){
     })
 }
 
+// search songs by title
+export async function searchSongs(title, limit = 20){
+    const data = await request('recording', {
+        query: `recording:(${escapeQuery(title)})`,
+        limit,
+    });
+    return data.recordings.map((rec) => {
+        const release = rec.releases?.[0];
+        const albumId = release?.['release-group']?.id ?? null;
+        const releaseDate = rec['first-release-date'] ?? release?.date ?? '';
+        return {
+            id: rec.id,
+            title: rec.title,
+            artist: creditName(rec['artist-credit']),
+            album: release?.title ?? '',
+            albumId,
+            year: releaseDate ? Number(releaseDate.slice(0, 4)) : null,
+            releaseDate,
+            length: rec.length ?? null,
+            duration: formatDuration(rec.length),
+            cover: albumId ? getCoverUrl(albumId) : null,
+        };
+    });
+}
+
+
+
