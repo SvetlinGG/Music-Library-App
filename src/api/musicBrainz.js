@@ -190,5 +190,28 @@ export async function searchSongs(title, limit = 20){
     });
 }
 
+// entry point for the search page. type: 'artist' | 'album' | 'song'
+export async function search(type, text){
+    if ( type === 'artist') return searchArtists(text, 20);
+    if ( type === 'album') return searchAlbums(text);
+    if ( type === 'song') return searchSongs(text);
+    throw new Error(`Unknown search type: ${type}`)
+}
 
+// search everything together
+
+export async function getArtistFull(artistName){
+    const [found] = await searchArtists(artistName, 1);
+
+    if ( !found) return null;
+
+    const artist = await getArtist(found.id);
+    const albums = await getAlbums(artist.id, artist.name);
+
+    for ( const album of albums){
+        album.songs = await getSongs(album.id);
+    }
+
+    return { ...artist, albums};
+}
 
