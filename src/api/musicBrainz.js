@@ -62,3 +62,12 @@ function getGenre(genres = []){
     if (!genres.length) return '';
     return [...genres].sort((a, b) => b.count - a.count)[0].name;
 }
+
+// search text without chars like -> ( ) : " " ? !
+function escapeQuery(text){
+    return text.trim().replace(/([+\-&|!(){}[\]^"~*?:\\/])/g, '\\$1');
+}
+
+function creditName(credit = []){
+    return credit.map((c) => c.name + (c.joinphase ?? '')).join('');
+}
