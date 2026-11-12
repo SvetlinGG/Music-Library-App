@@ -122,3 +122,26 @@ export async function getAlbums(artistId, artistName = '', limit = 100){
         .sort((a, b) => (a.releaseDate || '9999').localeCompare(b.releaseDate || '9999'));
 }
 
+// search songs
+export async function getSongs(albumId){
+    const data = await request('release', {
+        'release-group': albumId,
+        status: 'official',
+        inc: 'recordings media',
+        limit: 1,
+    });
+    const release = data.releases[0]
+    if (!release) return [];
+
+    return release.media.flatMap((disc) => 
+    disc.tracks.map((track) => ({
+        id: track.id,
+        disc: disc.position,
+        position: track.position,
+        title: track.title,
+        length: track.length,
+        duration: formatDuration(track.length),
+    }))
+    );
+}
+
