@@ -71,3 +71,28 @@ function escapeQuery(text){
 function creditName(credit = []){
     return credit.map((c) => c.name + (c.joinphase ?? '')).join('');
 }
+
+// search artist 
+export async function searchArtists(name, limit = 10){
+    const data = await request('artist', { query: `artist: (${escapeQuery(name)})`, limit});
+    return data.artists.map((artist) => ({
+        id: artist.id,
+        name: artist.name,
+        country: artist.country ?? '',
+        type: artist.type ?? '',
+        disambiguation: artist.disambiguation ?? '',
+    }));
+}
+
+// one artist by MusicBrainz id
+export async function getArtist(artistId){
+    const artist = await request(`artist/${artistId}`, { inc: 'genres'});
+    return {
+        id: artist.id,
+        name: artist.name,
+        country: artist.country ?? '',
+        type: artist.type ?? '',
+        genre: topGenre(artist.genres),
+        lifeSpan: artist['life-span'] ?? {},
+    }
+}
