@@ -145,3 +145,23 @@ export async function getSongs(albumId){
     );
 }
 
+// search albums and songs
+export async function searchAlbums(title, limit = 20){
+    const data = await request('release-group', {
+        query: `releasegroup:(${escapeQuery(title)}) AND primarytype:album`,
+        limit,
+    });
+    return data['release-groups'].map((rg) => {
+        const releaseDate = rg['first-release-date'] ?? '';
+        return {
+            id: rg.id,
+            album: rg.title,
+            artist: creditName(rg['artist-credit']),
+            genre: rg.tags?.length ? topGenre(rg.tags) : '',
+            year: releaseDate ? Number(releaseDate.slice(0, 4)) : null,
+            releaseDate,
+            cover: getCoverUrl(rg.id),
+        }
+    })
+}
+
