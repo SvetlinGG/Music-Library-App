@@ -11,10 +11,10 @@ function toCard(type, item) {
     return { key: item.id, id: item.id, title: item.album, artist: item.artist, year: item.year ?? "", genre: item.genre, cover: item.cover };
   }
   if (type === "song") {
-    return { key: item.id, id: item.albumId, title: item.title, artist: item.artist, year: item.year ?? "", genre: item.album, cover: item.cover };
+    return { key: item.id, id: item.albumId, title: item.title, artist: item.artist, year: item.year ?? "", genre: item.album, cover: item.cover, hasDetails: Boolean(item.albumId) };
   }
-  
-  return { key: item.id, id: item.id, title: item.name, artist: [item.type, item.country].filter(Boolean).join(" · "), year: item.disambiguation };
+
+  return { key: item.id, id: item.id, title: item.name, artist: [item.type, item.country].filter(Boolean).join(" · "), year: item.disambiguation, hasDetails: false };
 }
 
 export default function AlbumCatalog() {

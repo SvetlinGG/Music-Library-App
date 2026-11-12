@@ -125,7 +125,7 @@ export default function AlbumDetails() {
 
           <p className="details-description">
             {releaseDate ? `First released on ${releaseDate}.` : year ? `Released in ${year}.` : ""}
-            {" "}Album data and tracklist from MusicBrainz.
+            {" "}{findLocalAlbum(albumId) ? "Tracklist" : "Album data and tracklist"} from MusicBrainz.
           </p>
 
           <div className="details-actions">
