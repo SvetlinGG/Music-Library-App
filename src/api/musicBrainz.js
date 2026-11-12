@@ -42,3 +42,13 @@ async function request(path, params = {}){
     queue = result.catch(() => {}); // one failed request must not block the queue
     return result;
 }
+
+// make helpers
+export function formatDuration(ms){
+    if (!ms) return '';
+    const totalSeconds = Math.round(ms / 1000);
+    const minutes = Math.floor( totalSeconds / 60 );
+    const seconds = String( totalSeconds % 60).padStart(2, '0');
+    return `${minutes}:${seconds}`;
+}
+
