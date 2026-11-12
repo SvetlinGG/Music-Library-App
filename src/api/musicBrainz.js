@@ -35,7 +35,7 @@ async function request(path, params = {}){
                 await wait(MIN_DELAY_MS * 2 ** (attempt + 1 ));
                 continue;
             }
-            throw new Error(`MusicBrainz error ${response.status}: ${response.stausText}`);
+            throw new Error(`MusicBrainz error ${response.status}: ${response.statusText}`);
         }
     };
     const result = queue.then(run, run);
@@ -69,7 +69,7 @@ function escapeQuery(text){
 }
 
 function creditName(credit = []){
-    return credit.map((c) => c.name + (c.joinphase ?? '')).join('');
+    return credit.map((c) => c.name + (c.joinphrase ?? '')).join('');
 }
 
 // search artist 
@@ -106,7 +106,7 @@ export async function getAlbums(artistId, artistName = '', limit = 100){
         limit
     });
     return data['release-groups']
-        .filter((rg) => rg['secondary-types'].length === 0)
+        .filter((rg) => (rg['secondary-types'] ?? []).length === 0)
         .map((rg) => {
             const releaseDate = rg['first-release-date'] ?? '';
             return {

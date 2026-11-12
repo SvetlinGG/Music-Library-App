@@ -5,7 +5,7 @@ export default function Register() {
     <section className="auth-page">
       <div className="auth-card">
         <div className="auth-header">
-          <span className="eyebrow">Join SoundVault</span>
+          <span className="eyebrow">Join SoundVibe</span>
           <h1>Register</h1>
           <p className="auth-subtitle">Create an account and start building your collection.</p>
         </div>

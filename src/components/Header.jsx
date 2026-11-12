@@ -5,7 +5,7 @@ export default function Header() {
   return (
     <header className="site-header">
       <div className="site-header-inner">
-        <Link to="/" className="logo" aria-label="SoundVault home">
+        <Link to="/" className="logo" aria-label="SoundVibe home">
           <span className="logo-mark" aria-hidden="true">
             <span className="logo-disc" />
           </span>
