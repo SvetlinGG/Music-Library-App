@@ -58,7 +58,7 @@ export function getCoverUrl(albumId, size = 250){
 
 }
 
-function getGenre(genres = []){
+function topGenre(genres = []){
     if (!genres.length) return '';
     return [...genres].sort((a, b) => b.count - a.count)[0].name;
 }
@@ -94,5 +94,31 @@ export async function getArtist(artistId){
         type: artist.type ?? '',
         genre: topGenre(artist.genres),
         lifeSpan: artist['life-span'] ?? {},
-    }
+    };
 }
+
+// search albums 
+export async function getAlbums(artistId, artistName = '', limit = 100){
+    const data = await request('release-group', {
+        artist: artistId,
+        type: 'album',
+        inc: 'genres',
+        limit
+    });
+    return data['release-groups']
+        .filter((rg) => rg['secondary-types'].length === 0)
+        .map((rg) => {
+            const releaseDate = rg['first-release-date'] ?? '';
+            return {
+                id: rg.id,
+                album: rg.title,
+                artist: artistName,
+                genre: topGenre(rg.genres),
+                year: releaseDate ? Number(releaseDate.slice(0, 4)) : null,
+                releaseDate,
+                cover: getCoverUrl(rg.id),
+            };
+        })
+        .sort((a, b) => (a.releaseDate || '9999').localeCompare(b.releaseDate || '9999'));
+}
+
