@@ -5,7 +5,7 @@ import { createPlayer, findVideo, playerErrorMessage } from "../api/youTubeApi";
 export default function YouTubePlayer({ artist, album, song, onClose }) {
   const hostRef = useRef(null);
   const [video, setVideo] = useState(null);
-  const [status, setStatus] = useState("searching"); // searching | playing | error
+  const [status, setStatus] = useState("searching"); 
   const [error, setError] = useState("");
 
   useEffect(() => {
