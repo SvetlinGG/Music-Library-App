@@ -1,9 +1,10 @@
 
 
-const userApiKey = 'sb_publishable_1YnOAlXkaINLpwxGrT8QNg_-ssIpzlT';
-const userSupabaseUrl = 'https://pntezrlzpnvbmxjltaqr.supabase.co/rest/v1/profiles';
+export const userApiKey = 'sb_publishable_1YnOAlXkaINLpwxGrT8QNg_-ssIpzlT';
+export const supabaseUrl = 'https://pntezrlzpnvbmxjltaqr.supabase.co';
+const userSupabaseUrl = `${supabaseUrl}/rest/v1/profiles`;
 
-export default async function request(path = '/', method = 'GET', data = null){
+export default async function request(path = '', method = 'GET', data = null){
 
     const options = {
         headers: {
