@@ -20,5 +20,10 @@ export async function signUp({ username, email, password }) {
     throw new Error(result.msg || result.error_description || result.message || `Error: ${response.status}`);
   }
 
+  
+  if (Array.isArray(result.identities) && result.identities.length === 0) {
+    throw new Error("This email is already registered.");
+  }
+
   return result;
 }

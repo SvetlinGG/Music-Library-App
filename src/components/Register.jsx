@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
-//import { signUp } from "../api/auth-Supabase";
-import request from "../api/user-Supabase-request";
+import { signUp } from "../api/auth-Supabase";
+//import request from "../api/user-Supabase-request";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ export default function Register() {
 
     setPending(true);
     try {
-      await request({ username: username.trim(), email: email.trim(), password });
+      await signUp({ username: username.trim(), email: email.trim(), password });
       navigate("/login");
     } catch (err) {
       setError(err.message);
