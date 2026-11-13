@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import { albums } from "../data/albums";
 import { findAlbum, formatDuration, getAlbum, getSongs } from "../api/musicBrainz";
+import YouTubePlayer from "./YouTubePlayer";
 
 
 function findLocalAlbum(albumId) {
@@ -16,6 +17,8 @@ export default function AlbumDetails() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [coverFailed, setCoverFailed] = useState(false);
+  
+  const [nowPlaying, setNowPlaying] = useState(null);
 
   useEffect(() => {
     let ignore = false; 
@@ -25,6 +28,7 @@ export default function AlbumDetails() {
     setSongs([]);
     setError("");
     setCoverFailed(false);
+    setNowPlaying(null);
     setLoading(true);
 
     async function load() {
@@ -129,9 +133,20 @@ export default function AlbumDetails() {
           </p>
 
           <div className="details-actions">
-            <button className="details-play">▶ Play</button>
+            <button className="details-play" onClick={() => setNowPlaying({ song: "" })}>
+              ▶ Play
+            </button>
             <button className="details-fav">♡ Add to Collection</button>
           </div>
+
+          {nowPlaying && (
+            <YouTubePlayer
+              artist={artist}
+              album={title}
+              song={nowPlaying.song}
+              onClose={() => setNowPlaying(null)}
+            />
+          )}
         </div>
       </div>
 
@@ -142,12 +157,18 @@ export default function AlbumDetails() {
         ) : (
           <ol>
             {songs.map((song) => (
-              <li key={song.id}>
-                <span className="track-no">
-                  {hasManyDiscs ? `${song.disc}.${song.position}` : song.position}
-                </span>
-                <span className="track-title">{song.title}</span>
-                <span className="track-time">{song.duration}</span>
+              <li key={song.id} className={nowPlaying?.song === song.title ? "is-playing" : ""}>
+                <button
+                  className="track-btn"
+                  onClick={() => setNowPlaying({ song: song.title })}
+                  aria-label={`Play ${song.title}`}
+                >
+                  <span className="track-no">
+                    {hasManyDiscs ? `${song.disc}.${song.position}` : song.position}
+                  </span>
+                  <span className="track-title">{song.title}</span>
+                  <span className="track-time">{song.duration}</span>
+                </button>
               </li>
             ))}
           </ol>
