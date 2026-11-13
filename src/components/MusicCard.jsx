@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router";
 
-// colour for the placeholder cover; works for number ids (1, 2...) and MusicBrainz text ids
+
 function getHue(id) {
   if (typeof id === "number") return (id * 47) % 360;
   let hue = 0;
@@ -17,6 +17,8 @@ export default function MusicCard({
   genre = "",
   cover = "",
   hasDetails = true,
+  onAddToCollection,
+  onDelete,
 }) {
 
   const hue = getHue(id);
@@ -58,6 +60,26 @@ export default function MusicCard({
 
           <button className="fav-btn" aria-label={`Add ${title} to favorites`}>
             ♡
+          </button>
+        </div>
+
+        <div className="card-actions">
+          <button
+            type="button"
+            className="collection-btn"
+            onClick={() => onAddToCollection?.(id)}
+            aria-label={`Add ${title} to collection`}
+          >
+            + Add to Collection
+          </button>
+
+          <button
+            type="button"
+            className="delete-btn"
+            onClick={() => onDelete?.(id)}
+            aria-label={`Delete ${title}`}
+          >
+            Delete
           </button>
         </div>
       </div>
