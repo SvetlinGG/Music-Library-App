@@ -1,6 +1,6 @@
 
 
-const API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
+const API_KEY = 'AIzaSyAPRjrVmUv5QiXG_4Jb1R6PDNXKN2-CjxU';
 const SEARCH_URL = 'https://www.googleapis.com/youtube/v3/search';
 const IFRAME_API_URL = 'https://www.youtube.com/iframe_api';
 const CACHE_KEY = 'yt-video-cache-v1';
@@ -45,8 +45,8 @@ export async function searchVideo(query) {
     if (memoryCache.has(key)) return memoryCache.get(key);
     if (pending.has(key)) return pending.get(key);
 
-    if (!API_KEY) {
-        throw new Error('YouTube API key is missing. Add VITE_YOUTUBE_API_KEY to .env.local and restart the dev server.');
+    if (!API_KEY || API_KEY === 'PASTE_YOUR_YOUTUBE_API_KEY_HERE') {
+        throw new Error('YouTube API key is missing. Paste it into API_KEY in src/api/youTubeApi.js.');
     }
 
     const url = new URL(SEARCH_URL);
