@@ -187,3 +187,19 @@
     font-size: 1.15rem;
   }
 }
+
+.user-name {
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.logout-btn {
+  font: inherit;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
