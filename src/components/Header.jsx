@@ -1,7 +1,16 @@
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import ThemeToggle from "./ThemeToggle";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function Header() {
+  const { isLoggedIn, user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const logoutHandler = async () => {
+    await logout();
+    navigate("/");
+  };
+
   return (
     <header className="site-header">
       <div className="site-header-inner">
@@ -22,8 +31,19 @@ export default function Header() {
 
         <div className="auth-links">
           <ThemeToggle />
-          <NavLink to="/login" className="nav-link">Login</NavLink>
-          <NavLink to="/register" className="btn-register">Register</NavLink>
+          {isLoggedIn ? (
+            <>
+              <span className="user-name" title={user.email}>Hi, {user.username}</span>
+              <button type="button" className="nav-link logout-btn" onClick={logoutHandler}>
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <NavLink to="/login" className="nav-link">Login</NavLink>
+              <NavLink to="/register" className="btn-register">Register</NavLink>
+            </>
+          )}
         </div>
       </div>
     </header>

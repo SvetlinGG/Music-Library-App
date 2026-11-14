@@ -19,6 +19,7 @@ export default function MusicCard({
   hasDetails = true,
   onAddToCollection,
   onDelete,
+  inCollection = false,
 }) {
 
   const hue = getHue(id);
@@ -63,25 +64,32 @@ export default function MusicCard({
           </button>
         </div>
 
-        <div className="card-actions">
-          <button
-            type="button"
-            className="collection-btn"
-            onClick={() => onAddToCollection?.(id)}
-            aria-label={`Add ${title} to collection`}
-          >
-            + Add to Collection
-          </button>
+        {(onAddToCollection || onDelete) && (
+          <div className="card-actions">
+            {onAddToCollection && (
+              <button
+                type="button"
+                className="collection-btn"
+                onClick={() => onAddToCollection(id)}
+                disabled={inCollection}
+                aria-label={inCollection ? `${title} is in your collection` : `Add ${title} to collection`}
+              >
+                {inCollection ? "✓ In Collection" : "+ Add to Collection"}
+              </button>
+            )}
 
-          <button
-            type="button"
-            className="delete-btn"
-            onClick={() => onDelete?.(id)}
-            aria-label={`Delete ${title}`}
-          >
-            Delete
-          </button>
-        </div>
+            {onDelete && (
+              <button
+                type="button"
+                className="delete-btn"
+                onClick={() => onDelete(id)}
+                aria-label={`Remove ${title} from collection`}
+              >
+                Delete
+              </button>
+            )}
+          </div>
+        )}
       </div>
     </article>
   );

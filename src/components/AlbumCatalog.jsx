@@ -2,6 +2,9 @@ import MusicCard from "./MusicCard";
 import { albums } from "../data/albums";
 import { useEffect, useState } from "react";
 import { search } from "../api/iTunes";
+import { useNavigate } from "react-router";
+import { useAuth } from "../contexts/AuthContext";
+import useCollection from "../hooks/useCollection";
 
 const SEARCH_DELAY_MS = 500; 
 
@@ -26,6 +29,30 @@ export default function AlbumCatalog() {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const { isLoggedIn } = useAuth();
+  const { findItem, add } = useCollection();
+  const navigate = useNavigate();
+  const [collectionError, setCollectionError] = useState("");
+
+  // guests are sent to login, logged-in 
+  async function addHandler(album, isLocal) {
+    if (!isLoggedIn) return navigate("/login", { state: { from: "/" } });
+    setCollectionError("");
+    try {
+      await add(album, isLocal);
+    } catch (err) {
+      setCollectionError(`Could not add "${album.title}": ${err.message}`);
+    }
+  }
+
+  // only albums can go to the collection (not songs or artists)
+  function collectionProps(album, isLocal) {
+    return {
+      inCollection: Boolean(findItem(album, isLocal)),
+      onAddToCollection: () => addHandler(album, isLocal),
+    };
+  }
 
   const q = query.trim();
   const isSearching = q.length > 0;
@@ -98,10 +125,14 @@ export default function AlbumCatalog() {
         )}
       </div>
 
+      {collectionError && <p className="auth-error" role="alert">{collectionError}</p>}
+
       <div className="music-grid">
         {isSearching
-          ? !loading && results.map(({ key, ...card }) => <MusicCard key={key} {...card} />)
-          : catalogAlbums.map((album) => <MusicCard key={album.id} {...album} />)}
+          ? !loading && results.map(({ key, ...card }) => (
+              <MusicCard key={key} {...card} {...(searchType === "album" ? collectionProps(card, false) : {})} />
+            ))
+          : catalogAlbums.map((album) => <MusicCard key={album.id} {...album} {...collectionProps(album, true)} />)}
       </div>
     </section>
   );

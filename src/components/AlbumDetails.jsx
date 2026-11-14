@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import { albums } from "../data/albums";
 import { findAlbum, formatDuration, getAlbum, getSongs } from "../api/iTunes";
 import YouTubePlayer from "./YouTubePlayer";
+import AlbumComments from "./AlbumComments";
+import { useAuth } from "../contexts/AuthContext";
+import useCollection from "../hooks/useCollection";
 
 
 function findLocalAlbum(albumId) {
@@ -19,6 +22,12 @@ export default function AlbumDetails() {
   const [coverFailed, setCoverFailed] = useState(false);
   
   const [nowPlaying, setNowPlaying] = useState(null);
+
+  const { isLoggedIn } = useAuth();
+  const { findItem, add, remove } = useCollection();
+  const navigate = useNavigate();
+  const [saving, setSaving] = useState(false);
+  const [collectionError, setCollectionError] = useState("");
 
   useEffect(() => {
     let ignore = false; 
@@ -69,6 +78,24 @@ export default function AlbumDetails() {
   }
 
   const { title, artist, year, genre, cover, releaseDate } = album;
+
+  const isLocal = Boolean(findLocalAlbum(albumId));
+  const cardAlbum = { id: album.id ?? albumId, title, artist, year, genre, cover };
+  const savedRow = findItem(cardAlbum, isLocal);
+
+  async function collectionHandler() {
+    if (!isLoggedIn) return navigate("/login", { state: { from: `/albums/${albumId}` } });
+    setSaving(true);
+    setCollectionError("");
+    try {
+      if (savedRow) await remove(savedRow.id);
+      else await add(cardAlbum, isLocal);
+    } catch (err) {
+      setCollectionError(err.message);
+    } finally {
+      setSaving(false);
+    }
+  }
   const totalLength = songs.reduce((sum, s) => sum + (s.length ?? 0), 0);
   const hasManyDiscs = songs.some((s) => s.disc > 1);
 
@@ -136,8 +163,11 @@ export default function AlbumDetails() {
             <button className="details-play" onClick={() => setNowPlaying({ song: "" })}>
               ▶ Play
             </button>
-            <button className="details-fav">♡ Add to Collection</button>
+            <button className="details-fav" onClick={collectionHandler} disabled={saving}>
+              {saving ? "Saving..." : savedRow ? "✓ In Collection · Remove" : "+ Add to Collection"}
+            </button>
           </div>
+          {collectionError && <p className="auth-error" role="alert">{collectionError}</p>}
 
           {nowPlaying && (
             <YouTubePlayer
@@ -174,6 +204,8 @@ export default function AlbumDetails() {
           </ol>
         )}
       </div>
+
+      <AlbumComments albumId={albumId} />
     </section>
   );
 }
