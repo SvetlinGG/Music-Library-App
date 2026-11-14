@@ -84,7 +84,11 @@ export default function AlbumDetails() {
   const savedRow = findItem(cardAlbum, isLocal);
 
   async function collectionHandler() {
-    if (!isLoggedIn) return navigate("/login", { state: { from: `/albums/${albumId}` } });
+    if (!isLoggedIn) {
+      return navigate("/login", {
+        state: { from: `/albums/${albumId}`, message: "Log in to add albums to your own collection." },
+      });
+    }
     setSaving(true);
     setCollectionError("");
     try {
@@ -168,6 +172,11 @@ export default function AlbumDetails() {
             </button>
           </div>
           {collectionError && <p className="auth-error" role="alert">{collectionError}</p>}
+          {savedRow && !saving && (
+            <p className="auth-success" role="status">
+              This album is in your collection. <Link to="/my-collection">View My Collection →</Link>
+            </p>
+          )}
 
           {nowPlaying && (
             <YouTubePlayer

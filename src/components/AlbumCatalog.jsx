@@ -2,7 +2,7 @@ import MusicCard from "./MusicCard";
 import { albums } from "../data/albums";
 import { useEffect, useState } from "react";
 import { search } from "../api/iTunes";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
 import useCollection from "../hooks/useCollection";
 
@@ -34,22 +34,38 @@ export default function AlbumCatalog() {
   const { findItem, add } = useCollection();
   const navigate = useNavigate();
   const [collectionError, setCollectionError] = useState("");
+  const [addedTitle, setAddedTitle] = useState("");
+  const [addingKey, setAddingKey] = useState(null);
 
-  // guests are sent to login, logged-in 
+  
   async function addHandler(album, isLocal) {
-    if (!isLoggedIn) return navigate("/login", { state: { from: "/" } });
+    if (!isLoggedIn) {
+      return navigate("/login", {
+        state: { from: "/", message: "Log in to add albums to your own collection." },
+      });
+    }
+
+    const key = `${isLocal ? "local" : "itunes"}-${album.id}`;
+    if (addingKey) return; 
+
     setCollectionError("");
+    setAddedTitle("");
+    setAddingKey(key);
     try {
       await add(album, isLocal);
+      setAddedTitle(album.title);
     } catch (err) {
       setCollectionError(`Could not add "${album.title}": ${err.message}`);
+    } finally {
+      setAddingKey(null);
     }
   }
 
-  // only albums can go to the collection (not songs or artists)
+  
   function collectionProps(album, isLocal) {
     return {
       inCollection: Boolean(findItem(album, isLocal)),
+      adding: addingKey === `${isLocal ? "local" : "itunes"}-${album.id}`,
       onAddToCollection: () => addHandler(album, isLocal),
     };
   }
@@ -126,6 +142,11 @@ export default function AlbumCatalog() {
       </div>
 
       {collectionError && <p className="auth-error" role="alert">{collectionError}</p>}
+      {addedTitle && (
+        <p className="auth-success" role="status">
+          "{addedTitle}" was added to your collection. <Link to="/my-collection">View My Collection →</Link>
+        </p>
+      )}
 
       <div className="music-grid">
         {isSearching
