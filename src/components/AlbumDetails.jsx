@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import { albums } from "../data/albums";
-import { findAlbum, formatDuration, getAlbum, getSongs } from "../api/musicBrainz";
+import { findAlbum, formatDuration, getAlbum, getSongs } from "../api/iTunes";
 import YouTubePlayer from "./YouTubePlayer";
 
 
@@ -32,20 +32,20 @@ export default function AlbumDetails() {
     setLoading(true);
 
     async function load() {
-      let mbId = albumId;
+      let itunesId = albumId;
 
       if (local) {
         
         const found = await findAlbum(local.title, local.artist);
         if (!found) return [];
-        mbId = found.id;
+        itunesId = found.id;
       } else {
         const info = await getAlbum(albumId);
         if (ignore) return [];
         setAlbum({ ...info, title: info.album });
       }
 
-      return getSongs(mbId);
+      return getSongs(itunesId);
     }
 
     load()
@@ -73,7 +73,7 @@ export default function AlbumDetails() {
   const hasManyDiscs = songs.some((s) => s.disc > 1);
 
   let tracksText = "";
-  if (loading) tracksText = "Loading tracklist from MusicBrainz...";
+  if (loading) tracksText = "Loading tracklist from iTunes...";
   else if (error) tracksText = `Could not load the tracklist: ${error}`;
   else if (!songs.length) tracksText = "No tracklist found for this album.";
 
@@ -129,7 +129,7 @@ export default function AlbumDetails() {
 
           <p className="details-description">
             {releaseDate ? `First released on ${releaseDate}.` : year ? `Released in ${year}.` : ""}
-            {" "}{findLocalAlbum(albumId) ? "Tracklist" : "Album data and tracklist"} from MusicBrainz.
+            {" "}{findLocalAlbum(albumId) ? "Tracklist" : "Album data and tracklist"} from iTunes.
           </p>
 
           <div className="details-actions">

@@ -1,7 +1,7 @@
 import MusicCard from "./MusicCard";
 import { albums } from "../data/albums";
 import { useEffect, useState } from "react";
-import { search } from "../api/musicBrainz";
+import { search } from "../api/iTunes";
 
 const SEARCH_DELAY_MS = 500; 
 
@@ -62,9 +62,9 @@ export default function AlbumCatalog() {
 
   let subtitle = `${catalogAlbums.length} albums · Classic records that shaped rock history`;
   if (isSearching) {
-    if (loading) subtitle = `Searching MusicBrainz for "${q}"...`;
+    if (loading) subtitle = `Searching iTunes for "${q}"...`;
     else if (error) subtitle = `Search failed: ${error}`;
-    else subtitle = `${results.length} ${searchType} results for "${q}" from MusicBrainz`;
+    else subtitle = `${results.length} ${searchType} results for "${q}" from iTunes`;
   }
 
   return (
@@ -80,7 +80,7 @@ export default function AlbumCatalog() {
           type="text"
           value={query}
           onChange={e => setQuery(e.target.value)}
-          placeholder={`Search ${searchType}s on MusicBrainz...`}
+          placeholder={`Search ${searchType}s on iTunes...`}
         />
 
         <select value={searchType} onChange={e => setSearchType(e.target.value)} aria-label="Search type">
