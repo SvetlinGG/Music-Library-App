@@ -5,7 +5,7 @@ import { supabaseUrl, userApiKey } from "./user-Supabase-request";
 //          title, artist, year (integer), genre, cover, created_at (timestamptz)
 const COLLECTION_URL = `${supabaseUrl}/rest/v1/music-collection`;
 
-// requests are sent with the user's own token, so Supabase (RLS) knows who is asking
+
 function headers(session, extra = {}) {
     return {
         apikey: userApiKey,
@@ -22,7 +22,7 @@ async function handle(response) {
     return result;
 }
 
-// only the albums of the logged-in user, newest first
+
 export async function getMyCollection(session) {
     const url = new URL(COLLECTION_URL);
     url.searchParams.set("user_id", `eq.${session.user.id}`);
@@ -32,8 +32,7 @@ export async function getMyCollection(session) {
     return handle(response);
 }
 
-// album = { itunesId, title, artist, year, genre, cover }
-// itunesId must be Apple's collectionId (bigint column)
+
 export async function addToCollection(session, album) {
     const response = await fetch(COLLECTION_URL, {
         method: "POST",
@@ -55,7 +54,7 @@ export async function addToCollection(session, album) {
     return saved;
 }
 
-// delete one row by its id – the user_id filter makes sure it is the user's own row
+
 export async function removeFromCollection(session, rowId) {
     const url = new URL(COLLECTION_URL);
     url.searchParams.set("id", `eq.${rowId}`);
