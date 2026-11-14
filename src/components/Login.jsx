@@ -11,6 +11,8 @@ export default function Login() {
 
   // after login go back to the page that sent the user here (e.g. My Collection)
   const redirectTo = location.state?.from ?? "/";
+  // message from Register or from a page that needs login (e.g. "Add to Collection")
+  const message = location.state?.message ?? "";
 
   const loginHandler = async (e) => {
     e.preventDefault();
@@ -30,7 +32,13 @@ export default function Login() {
       await login({ email, password, remember });
       navigate(redirectTo, { replace: true });
     } catch (err) {
-      setError(err.message);
+      setError(
+        /email not confirmed/i.test(err.message)
+          ? "Please confirm your email first – open the link we sent you, then log in."
+          : /invalid login credentials/i.test(err.message)
+            ? "Wrong email or password."
+            : err.message
+      );
       setPending(false);
     }
   };
@@ -63,6 +71,7 @@ export default function Login() {
             <a href="#" className="auth-link-muted">Forgot password?</a>
           </div>
 
+          {message && !error && <p className="auth-success" role="status">{message}</p>}
           {error && <p className="auth-error" role="alert">{error}</p>}
 
           <button type="submit" className="auth-submit" disabled={pending}>

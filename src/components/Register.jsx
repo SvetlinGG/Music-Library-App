@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { signUp } from "../api/auth-Supabase";
-//import request from "../api/user-Supabase-request";
+
 
 export default function Register() {
   const navigate = useNavigate();
@@ -27,8 +27,16 @@ export default function Register() {
 
     setPending(true);
     try {
-      await signUp({ username: username.trim(), email: email.trim(), password });
-      navigate("/login");
+      const result = await signUp({ username: username.trim(), email: email.trim(), password });
+      
+      const needsConfirm = !result.access_token;
+      navigate("/login", {
+        state: {
+          message: needsConfirm
+            ? `Account created! We sent a confirmation link to ${email.trim()}. Confirm your email, then log in.`
+            : "Account created! You can log in now.",
+        },
+      });
     } catch (err) {
       setError(err.message);
     } finally {
