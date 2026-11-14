@@ -2,6 +2,12 @@
 -- Makes Supabase itself allow each user to see and change ONLY their own rows
 -- in "music-collection" (used by src/api/collection-Supabase.js).
 
+-- itunes_id holds Apple's collectionId (e.g. 1065975633), so it must be a number, not a uuid.
+-- (A uuid cannot be converted to a number, so existing itunes_id values are cleared.)
+alter table public."music-collection"
+  alter column itunes_id drop default,
+  alter column itunes_id type bigint using null;
+
 -- user_id is filled from the logged-in user when it is not sent
 alter table public."music-collection"
   alter column user_id set default auth.uid();
