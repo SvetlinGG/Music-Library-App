@@ -20,6 +20,7 @@ export default function MusicCard({
   onAddToCollection,
   onDelete,
   inCollection = false,
+  adding = false,
 }) {
 
   const hue = getHue(id);
@@ -71,10 +72,10 @@ export default function MusicCard({
                 type="button"
                 className="collection-btn"
                 onClick={() => onAddToCollection(id)}
-                disabled={inCollection}
+                disabled={inCollection || adding}
                 aria-label={inCollection ? `${title} is in your collection` : `Add ${title} to collection`}
               >
-                {inCollection ? "✓ In Collection" : "+ Add to Collection"}
+                {adding ? "Adding..." : inCollection ? "✓ In Collection" : "+ Add to Collection"}
               </button>
             )}
 
