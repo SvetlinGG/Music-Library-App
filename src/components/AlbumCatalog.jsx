@@ -5,6 +5,7 @@ import { search } from "../api/iTunes";
 import { Link, useNavigate } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
 import useCollection from "../hooks/useCollection";
+import useFavorites from "../hooks/useFavorites";
 
 const SEARCH_DELAY_MS = 500; 
 
@@ -32,6 +33,7 @@ export default function AlbumCatalog() {
 
   const { isLoggedIn } = useAuth();
   const { findItem, add } = useCollection();
+  const { findFavorite, toggleFavorite, busyId } = useFavorites();
   const navigate = useNavigate();
   const [collectionError, setCollectionError] = useState("");
   const [addedTitle, setAddedTitle] = useState("");
@@ -62,11 +64,29 @@ export default function AlbumCatalog() {
   }
 
   
+  async function favoriteHandler(album) {
+    if (!isLoggedIn) {
+      return navigate("/login", {
+        state: { from: "/", message: "Log in to save albums to your favorites." },
+      });
+    }
+    setCollectionError("");
+    try {
+      await toggleFavorite(album);
+    } catch (err) {
+      setCollectionError(`Could not update favorites for "${album.title}": ${err.message}`);
+    }
+  }
+
+  
   function collectionProps(album, isLocal) {
     return {
       inCollection: Boolean(findItem(album, isLocal)),
       adding: addingKey === `${isLocal ? "local" : "itunes"}-${album.id}`,
       onAddToCollection: () => addHandler(album, isLocal),
+      isFavorite: Boolean(findFavorite(album)),
+      favoriteBusy: busyId === album.id,
+      onToggleFavorite: favoriteHandler,
     };
   }
 
