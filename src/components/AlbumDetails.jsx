@@ -4,7 +4,6 @@ import { albums } from "../data/albums";
 import { findAlbum, formatDuration, getAlbum, getSongs } from "../api/iTunes";
 import YouTubePlayer from "./YouTubePlayer";
 import AlbumComments from "./AlbumComments";
-import BandHistory from "./BandHistory";
 import ErrorPage from "./ErrorPage";
 import NotFound from "./NotFound";
 import { useAuth } from "../contexts/AuthContext";
@@ -202,7 +201,11 @@ export default function AlbumDetails() {
             </p>
           )}
 
-          <BandHistory artist={artist} />
+          {artist && (
+            <Link to={`/artists/${encodeURIComponent(artist)}`} className="details-fav band-history-toggle">
+              📖 Band History
+            </Link>
+          )}
 
           {nowPlaying && (
             <YouTubePlayer

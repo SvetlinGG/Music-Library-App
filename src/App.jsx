@@ -7,6 +7,7 @@ import MyCollection from "./components/MyCollection"
 import MyFavorites from "./components/MyFavorites"
 import AlbumDetails from "./components/AlbumDetails"
 import NotFound from "./components/NotFound"
+import BandHistory from "./components/BandHistory"
 
 
 
@@ -23,6 +24,7 @@ function App() {
         <Route path="/my-collection" element={<MyCollection />} />
         <Route path="/my-favorites" element={<MyFavorites />} />
         <Route path="/albums/:albumId" element={<AlbumDetails />} />
+        <Route path="/artists/:artistName" element={<BandHistory />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
