@@ -4,6 +4,8 @@ import { albums } from "../data/albums";
 import { findAlbum, formatDuration, getAlbum, getSongs } from "../api/iTunes";
 import YouTubePlayer from "./YouTubePlayer";
 import AlbumComments from "./AlbumComments";
+import ErrorPage from "./ErrorPage";
+import NotFound from "./NotFound";
 import { useAuth } from "../contexts/AuthContext";
 import useCollection from "../hooks/useCollection";
 
@@ -19,6 +21,7 @@ export default function AlbumDetails() {
   const [songs, setSongs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [notFound, setNotFound] = useState(false);
   const [coverFailed, setCoverFailed] = useState(false);
   
   const [nowPlaying, setNowPlaying] = useState(null);
@@ -36,6 +39,7 @@ export default function AlbumDetails() {
     setAlbum(local);
     setSongs([]);
     setError("");
+    setNotFound(false);
     setCoverFailed(false);
     setNowPlaying(null);
     setLoading(true);
@@ -51,6 +55,10 @@ export default function AlbumDetails() {
       } else {
         const info = await getAlbum(albumId);
         if (ignore) return [];
+        if (!info) {
+          setNotFound(true);
+          return [];
+        }
         setAlbum({ ...info, title: info.album });
       }
 
@@ -66,14 +74,29 @@ export default function AlbumDetails() {
   }, [albumId]);
 
   
-  if (!album) {
+  if (notFound) {
     return (
-      <section className="catalog details">
-        <Link to="/" className="details-back">← Back to Catalog</Link>
-        <p className="catalog-subtitle">
-          {loading ? "Loading album..." : `Could not load this album. ${error}`}
-        </p>
-      </section>
+      <NotFound
+        title="Album Not Found"
+        message="This album was never pressed on vinyl. Check the link or pick something heavy from the catalog."
+      />
+    );
+  }
+
+  if (!album) {
+    if (loading) {
+      return (
+        <section className="catalog details">
+          <Link to="/" className="details-back">← Back to Catalog</Link>
+          <p className="catalog-subtitle">Loading album...</p>
+        </section>
+      );
+    }
+    return (
+      <ErrorPage
+        title="The Amp Blew Up"
+        message={`We could not load this album. ${error}`}
+      />
     );
   }
 

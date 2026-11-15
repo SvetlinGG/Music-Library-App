@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Metal+Mania&family=Space+Grotesk:wght@500;700&display=swap');
 @import './header.css';
 @import './album-catalog.css';
 @import './music-card.css';
@@ -6,6 +6,7 @@
 @import './collection.css';
 @import './favorites.css';
 @import './album-details.css';
+@import './error-page.css';
 
 
 
