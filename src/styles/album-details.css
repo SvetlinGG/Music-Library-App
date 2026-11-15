@@ -548,3 +548,122 @@
 .comment .comment-error {
   margin-top: 10px;
 }
+
+
+.band-history-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  text-decoration: none;
+}
+
+.band-page {
+  max-width: 900px;
+}
+
+.band-page-back {
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.band-page-head {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.band-page-head h1 {
+  margin: 8px 0 8px;
+}
+
+.band-page-photo {
+  width: 140px;
+  height: 140px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: 0 12px 30px var(--shadow);
+}
+
+.band-history-panel {
+  padding: 22px 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 12px 30px var(--shadow);
+}
+
+.band-history-text {
+  max-height: 380px;
+  overflow-y: auto;
+  padding-right: 12px;
+  color: var(--text-muted);
+  font-size: 0.98rem;
+  line-height: 1.7;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) transparent;
+}
+
+.band-history-text:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.band-history-text p {
+  margin: 0 0 14px;
+}
+
+.band-history-text p:last-child {
+  margin-bottom: 0;
+}
+
+.band-page-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.band-history-link {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.band-history-link:hover {
+  text-decoration: underline;
+}
+
+.band-page-credit {
+  margin: 14px 0 0;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+@media (max-width: 600px) {
+  .band-page-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .band-page-photo {
+    width: 110px;
+    height: 110px;
+  }
+
+  .band-history-panel {
+    padding: 18px;
+  }
+}
