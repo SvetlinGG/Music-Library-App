@@ -1,10 +1,6 @@
 import { Link, useNavigate } from "react-router";
 
-// Shared heavy-metal error screen. Use it for 404s and for any page that failed to load.
-//   code     – big number at the top ("404"); leave it out for errors without a status
-//   title    – headline in the metal font
-//   message  – one or two sentences explaining what happened
-//   children – optional custom buttons (defaults to "Back to Catalog" + "Go Back")
+
 export default function ErrorPage({ code, title, message, children }) {
   const navigate = useNavigate();
 
