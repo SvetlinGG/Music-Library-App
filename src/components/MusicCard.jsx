@@ -21,6 +21,9 @@ export default function MusicCard({
   onDelete,
   inCollection = false,
   adding = false,
+  onToggleFavorite,
+  isFavorite = false,
+  favoriteBusy = false,
 }) {
 
   const hue = getHue(id);
@@ -60,9 +63,19 @@ export default function MusicCard({
             </Link>
           )}
 
-          <button className="fav-btn" aria-label={`Add ${title} to favorites`}>
-            ♡
-          </button>
+          {onToggleFavorite && (
+            <button
+              type="button"
+              className={`fav-btn${isFavorite ? " is-active" : ""}`}
+              onClick={() => onToggleFavorite({ id, title, artist, year, genre, cover })}
+              disabled={favoriteBusy}
+              aria-pressed={isFavorite}
+              aria-label={isFavorite ? `Remove ${title} from favorites` : `Add ${title} to favorites`}
+              title={isFavorite ? "Remove from favorites" : "Add to favorites"}
+            >
+              {isFavorite ? "♥" : "♡"}
+            </button>
+          )}
         </div>
 
         {(onAddToCollection || onDelete) && (
