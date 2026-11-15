@@ -1,0 +1,153 @@
+
+
+.error-page {
+  --metal-fire-1: #ff3d00;
+  --metal-fire-2: #ffb300;
+  --metal-chrome: linear-gradient(180deg, #ffffff 0%, #c9c9d2 38%, #5d5d6b 50%, #e6e6ee 62%, #8a8a99 100%);
+  --metal-glow: rgba(255, 61, 0, 0.55);
+
+  position: relative;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 64px 16px 96px;
+  text-align: center;
+  overflow: hidden;
+}
+
+:root[data-theme="light"] .error-page {
+  --metal-chrome: linear-gradient(180deg, #4a4a57 0%, #1c1c24 45%, #000 50%, #3a3a46 62%, #15151d 100%);
+  --metal-glow: rgba(255, 61, 0, 0.35);
+}
+
+
+.error-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: clamp(160px, 30vw, 260px);
+}
+
+.error-bolt {
+  position: absolute;
+  height: 120%;
+  fill: var(--metal-fire-2);
+  opacity: 0.85;
+  filter: drop-shadow(0 0 18px var(--metal-fire-1));
+  transform: rotate(12deg);
+  animation: error-flash 3.2s infinite;
+}
+
+.error-code {
+  position: relative;
+  display: grid;
+  margin: 0;
+  font-family: 'Metal Mania', var(--font-display);
+  font-size: clamp(7rem, 26vw, 14rem);
+  line-height: 0.9;
+  letter-spacing: 0.04em;
+  animation: error-shake 4s infinite;
+}
+
+
+.error-code > span {
+  grid-area: 1 / 1;
+}
+
+.error-code-ghost {
+  color: var(--accent);
+  opacity: 0.7;
+  transform: translate(4px, 3px);
+  animation: error-glitch 4s infinite;
+}
+
+.error-code-text {
+  background: var(--metal-chrome);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 4px 0 #000) drop-shadow(0 0 28px var(--metal-glow));
+}
+
+
+.error-spikes {
+  height: 14px;
+  margin: 8px auto 28px;
+  max-width: 420px;
+  background:
+    linear-gradient(135deg, transparent 50%, var(--metal-fire-1) 50%) 0 0 / 14px 14px repeat-x,
+    linear-gradient(225deg, transparent 50%, var(--metal-fire-1) 50%) 0 0 / 14px 14px repeat-x;
+  -webkit-mask: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent);
+  mask: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent);
+}
+
+.error-title {
+  margin: 0 0 14px;
+  font-family: 'Metal Mania', var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  letter-spacing: 0.03em;
+  background: linear-gradient(180deg, var(--metal-fire-2), var(--metal-fire-1) 70%, #b71c1c);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.error-message {
+  max-width: 520px;
+  margin: 0 auto 32px;
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.error-path {
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 0.9em;
+  word-break: break-all;
+}
+
+.error-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.error-actions a {
+  text-decoration: none;
+}
+
+
+
+@keyframes error-flash {
+  0%, 86%, 100% { opacity: 0.85; }
+  88% { opacity: 0.15; }
+  90% { opacity: 1; }
+  92% { opacity: 0.3; }
+}
+
+@keyframes error-shake {
+  0%, 84%, 100% { transform: translate(0, 0); }
+  86% { transform: translate(-3px, 1px) rotate(-1deg); }
+  88% { transform: translate(3px, -1px) rotate(1deg); }
+  90% { transform: translate(-2px, 0); }
+}
+
+@keyframes error-glitch {
+  0%, 84%, 100% { transform: translate(4px, 3px); }
+  86% { transform: translate(-6px, 2px); }
+  88% { transform: translate(7px, -3px); }
+  90% { transform: translate(4px, 3px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .error-bolt,
+  .error-code,
+  .error-code-ghost {
+    animation: none;
+  }
+}
