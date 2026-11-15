@@ -3,10 +3,12 @@ import { Link, Navigate } from "react-router";
 import MusicCard from "./MusicCard";
 import { useAuth } from "../contexts/AuthContext";
 import useCollection from "../hooks/useCollection";
+import useFavorites from "../hooks/useFavorites";
 
 export default function MyCollection() {
   const { isLoggedIn, user } = useAuth();
   const { items, loading, error, remove } = useCollection();
+  const { findFavorite, toggleFavorite, busyId } = useFavorites();
   const [actionError, setActionError] = useState("");
 
   
@@ -21,6 +23,15 @@ export default function MyCollection() {
       await remove(rowId);
     } catch (err) {
       setActionError(`Could not remove the album: ${err.message}`);
+    }
+  }
+
+  async function onToggleFavorite(album) {
+    setActionError("");
+    try {
+      await toggleFavorite(album);
+    } catch (err) {
+      setActionError(`Could not update favorites: ${err.message}`);
     }
   }
 
@@ -66,6 +77,9 @@ export default function MyCollection() {
               genre={row.genre ?? ""}
               cover={row.cover ?? ""}
               onDelete={() => onDelete(row.id)}
+              isFavorite={Boolean(findFavorite({ id: row.itunes_id, title: row.title, artist: row.artist }))}
+              favoriteBusy={busyId === row.itunes_id}
+              onToggleFavorite={onToggleFavorite}
             />
           ))}
         </div>
