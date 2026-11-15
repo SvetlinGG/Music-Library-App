@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router";
 import { addComment, getComments } from "../api/comments-Supabase";
+import { useAuth } from "../contexts/AuthContext";
 
 const MAX_LENGTH = 500;
 
@@ -14,11 +16,11 @@ function formatDate(value) {
 }
 
 export default function AlbumComments({ albumId }) {
+  const { user, isLoggedIn, getSession } = useAuth();
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const [author, setAuthor] = useState("");
   const [text, setText] = useState("");
   const [sending, setSending] = useState(false);
   const [sendError, setSendError] = useState("");
@@ -39,14 +41,14 @@ export default function AlbumComments({ albumId }) {
 
   async function onSubmit(e) {
     e.preventDefault();
-    const name = author.trim();
     const message = text.trim();
-    if (!name || !message) return;
+    if (!message) return;
 
     setSending(true);
     setSendError("");
     try {
-      const saved = await addComment({ albumId, author: name, text: message });
+      const session = await getSession();
+      const saved = await addComment(session, { albumId, content: message });
       setComments((prev) => [saved, ...prev]);
       setText("");
     } catch (err) {
@@ -67,17 +69,8 @@ export default function AlbumComments({ albumId }) {
         Comments {!loading && !error && <span className="comments-count">({comments.length})</span>}
       </h2>
 
+      {isLoggedIn ? (
       <form className="comment-form" onSubmit={onSubmit}>
-        <input
-          type="text"
-          className="comment-author"
-          value={author}
-          onChange={(e) => setAuthor(e.target.value)}
-          placeholder="Your name"
-          maxLength={50}
-          aria-label="Your name"
-          required
-        />
         <textarea
           className="comment-text"
           value={text}
@@ -93,13 +86,21 @@ export default function AlbumComments({ albumId }) {
           <button
             type="submit"
             className="details-play"
-            disabled={sending || !author.trim() || !text.trim()}
+            disabled={sending || !text.trim()}
           >
             {sending ? "Posting..." : "Post Comment"}
           </button>
         </div>
         {sendError && <p className="comment-error">Could not post your comment: {sendError}</p>}
       </form>
+      ) : (
+        <p className="catalog-subtitle">
+          <Link to="/login" state={{ from: `/albums/${albumId}`, message: "Log in to leave a comment." }}>
+            Log in
+          </Link>{" "}
+          to leave a comment.
+        </p>
+      )}
 
       {statusText ? (
         <p className="catalog-subtitle">{statusText}</p>
@@ -108,10 +109,12 @@ export default function AlbumComments({ albumId }) {
           {comments.map((c) => (
             <li key={c.id} className="comment">
               <div className="comment-head">
-                <span className="comment-name">{c.author}</span>
+                <span className="comment-name">
+                  {c.user_id === user?.id ? "You" : c.author || "Listener"}
+                </span>
                 <time className="comment-date" dateTime={c.created_at}>{formatDate(c.created_at)}</time>
               </div>
-              <p className="comment-body">{c.text}</p>
+              <p className="comment-body">{c.content}</p>
             </li>
           ))}
         </ul>

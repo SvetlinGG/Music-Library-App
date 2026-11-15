@@ -1,12 +1,6 @@
 import { supabaseUrl, userApiKey } from "./user-Supabase-request";
 
-// table "comments" in Supabase (see supabase/comments.sql)
 const COMMENTS_URL = `${supabaseUrl}/rest/v1/comments`;
-
-const headers = {
-    apikey: userApiKey,
-    Authorization: `Bearer ${userApiKey}`,
-};
 
 async function handle(response) {
     const result = await response.json().catch(() => null);
@@ -16,26 +10,33 @@ async function handle(response) {
     return result;
 }
 
-// all comments for one album, newest first
+
 export async function getComments(albumId) {
     const url = new URL(COMMENTS_URL);
-    url.searchParams.set("album_id", `eq.${albumId}`);
+    url.searchParams.set("album_id", `eq.${Number(albumId)}`);
     url.searchParams.set("order", "created_at.desc");
 
-    const response = await fetch(url, { headers });
+    const response = await fetch(url, {
+        headers: { apikey: userApiKey, Authorization: `Bearer ${userApiKey}` },
+    });
     return handle(response);
 }
 
-// add a comment and return the saved row
-export async function addComment({ albumId, author, text }) {
+
+export async function addComment(session, { albumId, content }) {
     const response = await fetch(COMMENTS_URL, {
         method: "POST",
         headers: {
-            ...headers,
+            apikey: userApiKey,
+            Authorization: `Bearer ${session.accessToken}`,
             "Content-Type": "application/json",
             Prefer: "return=representation",
         },
-        body: JSON.stringify({ album_id: String(albumId), author, text }),
+        body: JSON.stringify({
+            album_id: Number(albumId),
+            user_id: session.user.id,
+            content,
+        }),
     });
     const [saved] = await handle(response);
     return saved;
