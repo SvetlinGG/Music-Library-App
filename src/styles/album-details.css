@@ -227,7 +227,7 @@
   }
 }
 
-/* tracklist rows are buttons: click = play on YouTube */
+
 
 .details-tracks li {
   display: block;
@@ -274,7 +274,7 @@
   outline-offset: -2px;
 }
 
-/*  YouTube player  */
+
 
 .yt-player {
   margin-top: 28px;
@@ -341,7 +341,7 @@
   height: 100%;
 }
 
-/* comments */
+
 .details-comments {
   margin-top: 48px;
 }
@@ -469,4 +469,82 @@
   line-height: 1.55;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
+}
+
+
+.comment-edited {
+  font-style: italic;
+}
+
+.comment-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.comment-edit .comment-text {
+  min-height: 80px;
+}
+
+.comment-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.comment-edit .comment-actions {
+  margin-top: 0;
+}
+
+.comment-confirm span {
+  margin-right: auto;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.comment-btn {
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.comment-btn:hover:not(:disabled) {
+  color: var(--text);
+  border-color: var(--accent);
+  background: rgba(255, 61, 110, 0.08);
+}
+
+.comment-btn.is-primary {
+  color: #fff;
+  border-color: transparent;
+  background: var(--accent-gradient);
+}
+
+.comment-btn.is-primary:hover:not(:disabled) {
+  color: #fff;
+  background: var(--accent-gradient);
+}
+
+.comment-btn.is-danger:hover:not(:disabled) {
+  color: #fff;
+  border-color: #e53935;
+  background: #e53935;
+}
+
+.comment-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.comment .comment-error {
+  margin-top: 10px;
 }
