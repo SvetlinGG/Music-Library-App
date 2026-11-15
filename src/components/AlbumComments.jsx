@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import { addComment, getComments } from "../api/comments-Supabase";
+import { addComment, deleteComment, getComments, updateComment } from "../api/comments-Supabase";
 import { useAuth } from "../contexts/AuthContext";
 
 const MAX_LENGTH = 500;
@@ -58,6 +58,18 @@ export default function AlbumComments({ albumId }) {
     }
   }
 
+  async function onEdit(commentId, content) {
+    const session = await getSession();
+    const saved = await updateComment(session, commentId, content);
+    setComments((prev) => prev.map((c) => (c.id === commentId ? saved : c)));
+  }
+
+  async function onDelete(commentId) {
+    const session = await getSession();
+    await deleteComment(session, commentId);
+    setComments((prev) => prev.filter((c) => c.id !== commentId));
+  }
+
   let statusText = "";
   if (loading) statusText = "Loading comments...";
   else if (error) statusText = `Could not load comments: ${error}`;
@@ -107,18 +119,133 @@ export default function AlbumComments({ albumId }) {
       ) : (
         <ul className="comment-list">
           {comments.map((c) => (
-            <li key={c.id} className="comment">
-              <div className="comment-head">
-                <span className="comment-name">
-                  {c.user_id === user?.id ? "You" : c.author || "Listener"}
-                </span>
-                <time className="comment-date" dateTime={c.created_at}>{formatDate(c.created_at)}</time>
-              </div>
-              <p className="comment-body">{c.content}</p>
-            </li>
+            <CommentItem
+              key={c.id}
+              comment={c}
+              isOwn={Boolean(user) && c.user_id === user.id}
+              onEdit={onEdit}
+              onDelete={onDelete}
+            />
           ))}
         </ul>
       )}
     </div>
+  );
+}
+
+
+function CommentItem({ comment, isOwn, onEdit, onDelete }) {
+  const [mode, setMode] = useState("view"); 
+  const [draft, setDraft] = useState(comment.content);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+
+  function startEdit() {
+    setDraft(comment.content);
+    setError("");
+    setMode("edit");
+  }
+
+  function cancel() {
+    setError("");
+    setMode("view");
+  }
+
+  async function run(action) {
+    setBusy(true);
+    setError("");
+    try {
+      await action();
+      return true;
+    } catch (err) {
+      setError(err.message);
+      return false;
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function onSave(e) {
+    e.preventDefault();
+    const content = draft.trim();
+    if (!content) return;
+    if (content === comment.content) return setMode("view");
+    if (await run(() => onEdit(comment.id, content))) setMode("view");
+  }
+
+  
+  const confirmDelete = () => run(() => onDelete(comment.id));
+
+  return (
+    <li className="comment">
+      <div className="comment-head">
+        <span className="comment-name">{isOwn ? "You" : comment.author || "Listener"}</span>
+        <span className="comment-date">
+          <time dateTime={comment.created_at}>{formatDate(comment.created_at)}</time>
+          {comment.updated_at && (
+            <span className="comment-edited" title={`Edited ${formatDate(comment.updated_at)}`}>
+              {" "}· edited
+            </span>
+          )}
+        </span>
+      </div>
+
+      {mode === "edit" ? (
+        <form className="comment-edit" onSubmit={onSave}>
+          <textarea
+            className="comment-text"
+            value={draft}
+            onChange={(e) => setDraft(e.target.value)}
+            maxLength={MAX_LENGTH}
+            rows={3}
+            aria-label="Edit your comment"
+            autoFocus
+            required
+          />
+          <div className="comment-form-footer">
+            <span className="comment-chars">{draft.length}/{MAX_LENGTH}</span>
+            <div className="comment-actions">
+              <button type="button" className="comment-btn" onClick={cancel} disabled={busy}>
+                Cancel
+              </button>
+              <button type="submit" className="comment-btn is-primary" disabled={busy || !draft.trim()}>
+                {busy ? "Saving..." : "Save"}
+              </button>
+            </div>
+          </div>
+        </form>
+      ) : (
+        <p className="comment-body">{comment.content}</p>
+      )}
+
+      {isOwn && mode === "view" && (
+        <div className="comment-actions">
+          <button type="button" className="comment-btn" onClick={startEdit}>
+            ✎ Edit
+          </button>
+          <button
+            type="button"
+            className="comment-btn is-danger"
+            onClick={() => { setError(""); setMode("confirm-delete"); }}
+          >
+            🗑 Delete
+          </button>
+        </div>
+      )}
+
+      {mode === "confirm-delete" && (
+        <div className="comment-actions comment-confirm" role="alert">
+          <span>Delete this comment?</span>
+          <button type="button" className="comment-btn" onClick={cancel} disabled={busy}>
+            Cancel
+          </button>
+          <button type="button" className="comment-btn is-danger" onClick={confirmDelete} disabled={busy}>
+            {busy ? "Deleting..." : "Yes, delete"}
+          </button>
+        </div>
+      )}
+
+      {error && <p className="comment-error">{error}</p>}
+    </li>
   );
 }
