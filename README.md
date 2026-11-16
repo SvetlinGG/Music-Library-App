@@ -4,7 +4,7 @@ A React app where you can browse classic albums, search the iTunes music library
 
 ## Live Demo
 
-**Deployed app:** _link coming soon_
+**Deployed app:** https://music-library-sgg.netlify.app/
 
 ---
 
