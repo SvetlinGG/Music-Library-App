@@ -1,13 +1,16 @@
-// iTunes Search API
-//  - no API key needed
-//  - CORS is allowed, so we can call it straight from the browser
-//  - docs: https://performance-partners.apple.com/search-api
+
 
 const BASE_URL = "https://itunes.apple.com";
 
-// low level request
+const PROXY_URL = "/.netlify/functions/itunes";
+const useProxy = import.meta.env.PROD;
+
+
 async function request(path, params = {}) {
-    const url = new URL(`${BASE_URL}/${path}`);
+    const url = useProxy
+        ? new URL(PROXY_URL, window.location.origin)
+        : new URL(`${BASE_URL}/${path}`);
+    if (useProxy) url.searchParams.set("path", path);
     Object.entries(params).forEach(([key, value]) => {
         if (value !== undefined && value !== null) url.searchParams.set(key, value);
     });
@@ -20,12 +23,12 @@ async function request(path, params = {}) {
     return data.results ?? [];
 }
 
-// /search?term=...&entity=musicArtist|album|song&limit=...
+
 function searchRequest(term, entity, limit = 25) {
     return request("search", { term: term.trim(), entity, media: "music", limit });
 }
 
-// /lookup?id=...&entity=...
+
 function lookupRequest(id, params = {}) {
     return request("lookup", { id, ...params });
 }
