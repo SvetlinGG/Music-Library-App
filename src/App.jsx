@@ -30,15 +30,4 @@ function App() {
         {/* only for logged-in users */}
         <Route element={<PrivateRoute />}>
           <Route path="/my-collection" element={<MyCollection />} />
-          <Route path="/my-favorites" element={<MyFavorites />} />
-        </Route>
-
-        <Route path="/albums/:albumId" element={<AlbumDetails />} />
-        <Route path="/artists/:artistName" element={<BandHistory />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </>
-  )
-}
-
-export default App
+          <Route path="/my-favorites" element={<MyFavori

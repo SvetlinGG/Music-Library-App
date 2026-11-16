@@ -55,6 +55,10 @@ Music-Library-App/
 ├── index.html              # The single HTML page
 ├── package.json            # Packages and scripts
 ├── vite.config.js          # Vite settings
+├── public/
+│   └── _redirects          # Netlify: send every URL to index.html (page refresh works)
+├── netlify/functions/
+│   └── itunes.mjs          # Small proxy to iTunes (iPhone search fix)
 ├── supabase/               # SQL for the database tables and security rules
 │   ├── comments.sql
 │   ├── favorites.sql
