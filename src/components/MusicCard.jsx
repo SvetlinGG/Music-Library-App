@@ -44,10 +44,6 @@ export default function MusicCard({
         )}
 
         {genre && <span className="genre-badge">{genre}</span>}
-
-        <button className="play-btn" aria-label={`Play ${title}`}>
-          ▶
-        </button>
       </div>
 
       <div className="card-content">
