@@ -40,7 +40,7 @@
   font-size: 1rem;
 }
 
-/* ===== SEARCH & FILTERS ===== */
+
 
 .filters {
   display: flex;
@@ -126,10 +126,36 @@
     padding: 32px 16px 56px;
   }
 
+  
   .filters {
-    flex-direction: column;
-    align-items: stretch;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
     border-radius: 24px;
+  }
+
+  .filters input {
+    grid-column: 1 / -1;
+    flex: none;
+    height: 48px;
+  }
+
+  .filters input,
+  .filters select {
+    font-size: 16px; 
+  }
+
+  .filters select {
+    min-width: 0;
+    height: 40px;
+    padding-left: 16px;
+    padding-right: 36px;
+    background-position: right 14px center;
+  }
+
+  
+  .filters select:only-of-type {
+    grid-column: 1 / -1;
   }
 
   .music-grid {
