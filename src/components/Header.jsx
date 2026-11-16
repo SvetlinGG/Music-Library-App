@@ -25,8 +25,12 @@ export default function Header() {
 
         <nav className="main-nav">
           <NavLink to="/" end className="nav-link">Home</NavLink>
-          <NavLink to="/my-collection" className="nav-link">My Collection</NavLink>
-          <NavLink to="/my-favorites" className="nav-link">My Favorites</NavLink>
+          {isLoggedIn && (
+            <>
+              <NavLink to="/my-collection" className="nav-link">My Collection</NavLink>
+              <NavLink to="/my-favorites" className="nav-link">My Favorites</NavLink>
+            </>
+          )}
         </nav>
 
         <div className="auth-links">
